@@ -49,6 +49,14 @@
 
       <div class="footer-bottom">
         <p class="copyright">{{ content.copyright }}</p>
+        <a
+          href="https://beian.miit.gov.cn/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="icp-beian"
+        >
+          皖ICP备2025075166号-3
+        </a>
       </div>
     </div>
   </footer>
@@ -262,6 +270,28 @@ defineProps<{
 
     .footer-section.light-mode & {
       color: #64748b;
+    }
+  }
+
+  .icp-beian {
+    display: block;
+    text-align: center;
+    color: #6b7585;
+    font-size: 0.8125rem;
+    margin-top: 12px;
+    text-decoration: none;
+    transition: color 0.3s;
+
+    &:hover {
+      color: #47caff;
+    }
+
+    .footer-section.light-mode & {
+      color: #64748b;
+
+      &:hover {
+        color: #2563eb;
+      }
     }
   }
 }

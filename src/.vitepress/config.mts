@@ -34,7 +34,7 @@ export default withMermaid({
   cleanUrls: true,
   lastUpdated: true,
   rewrites: sidebars.rewrites,
-  sitemap: { hostname: "https://maafw.xyz" },
+  sitemap: { hostname: "https://maafw.com" },
   locales,
   // Vite 构建优化配置
   vite: {
@@ -52,7 +52,7 @@ export default withMermaid({
     },
   },
   transformHead({ page, siteConfig }) {
-    const hostname = "https://maafw.xyz";
+    const hostname = "https://maafw.com";
     const siteBase = (siteConfig && (siteConfig as any).site?.base) || "/";
     const relativePath: string = (page as any).relativePath || "";
     let normalized = relativePath;
