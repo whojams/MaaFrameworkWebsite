@@ -16,7 +16,8 @@
                         loading="eager" />
                     <span class="logo-text">MaaFramework</span>
                 </a>
-                <div class="nav-links">
+                <!-- 桌面端导航链接 -->
+                <div class="nav-links desktop-nav">
                     <!-- 主题切换按钮 -->
                     <button class="theme-toggle" @click="toggleTheme" :aria-label="isLightMode ? '切换到暗色模式' : '切换到亮色模式'
                         ">
@@ -72,8 +73,102 @@
                     <a href="https://github.com/MaaXYZ/MaaFramework" target="_blank" rel="noopener noreferrer"
                         class="nav-link">GitHub</a>
                 </div>
+                <!-- 移动端汉堡菜单按钮 -->
+                <button class="hamburger-btn" :class="{ active: isMobileMenuOpen }" @click="toggleMobileMenu"
+                    aria-label="菜单">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
             </div>
         </nav>
+
+        <!-- 移动端菜单（独立于 nav） -->
+        <div class="mobile-menu" :class="{ open: isMobileMenuOpen, 'light-mode': isLightMode }">
+            <!-- 背景装饰 -->
+            <div class="mobile-menu-bg">
+                <div class="mobile-glow mobile-glow-1"></div>
+                <div class="mobile-glow mobile-glow-2"></div>
+                <div class="mobile-grid-overlay"></div>
+            </div>
+            <button class="mobile-close-btn" @click="closeMobileMenu" aria-label="关闭菜单">
+                <span class="close-line"></span>
+                <span class="close-line"></span>
+            </button>
+            <div class="mobile-menu-content">
+                <div class="mobile-menu-logo">
+                    <img src="/maafw.png" alt="MaaFramework" class="mobile-logo-img" />
+                </div>
+                <nav class="mobile-nav-links">
+                    <a :href="lang === 'zh' ? '/docs/1.1-QuickStarted' : '/en/docs/1.1-QuickStarted'"
+                        class="mobile-nav-link" @click="closeMobileMenu" :style="{ '--delay': '0.1s' }">
+                        <span class="link-icon">📖</span>
+                        <span class="link-text">{{ lang === "zh" ? "文档" : "Docs" }}</span>
+                    </a>
+                    <a :href="lang === 'zh' ? '/community/projects' : '/en/community/projects'" class="mobile-nav-link"
+                        @click="closeMobileMenu" :style="{ '--delay': '0.15s' }">
+                        <span class="link-icon">👥</span>
+                        <span class="link-text">{{ lang === "zh" ? "社区" : "Community" }}</span>
+                    </a>
+                    <a href="https://deepwiki.com/MaaXYZ/MaaFramework" target="_blank" rel="noopener noreferrer"
+                        class="mobile-nav-link" @click="closeMobileMenu" :style="{ '--delay': '0.2s' }">
+                        <span class="link-icon">🤖</span>
+                        <span class="link-text">{{ lang === "zh" ? "问 AI" : "Ask AI" }}</span>
+                    </a>
+                    <a href="https://github.com/MaaXYZ/MaaFramework" target="_blank" rel="noopener noreferrer"
+                        class="mobile-nav-link" @click="closeMobileMenu" :style="{ '--delay': '0.25s' }">
+                        <span class="link-icon">⭐</span>
+                        <span class="link-text">GitHub</span>
+                    </a>
+                </nav>
+                <div class="mobile-menu-divider"></div>
+                <div class="mobile-menu-actions">
+                    <button class="mobile-action-btn" @click="toggleTheme"
+                        :aria-label="isLightMode ? '切换到暗色模式' : '切换到亮色模式'">
+                        <div class="action-icon">
+                            <svg v-if="isLightMode" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" />
+                                <line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                                <line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                                <line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                                <line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                            </svg>
+                            <svg v-else viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <span class="action-label">{{ isLightMode ? (lang === 'zh' ? '暗色' : 'Dark') : (lang === 'zh' ?
+                            '亮色' : 'Light') }}</span>
+                    </button>
+                    <button class="mobile-action-btn" @click="toggleLanguage"
+                        :aria-label="lang === 'zh' ? 'Switch to English' : '切换到中文'">
+                        <div class="action-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                        </div>
+                        <span class="action-label">{{ lang === 'zh' ? 'EN' : '中文' }}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <HeroSection :content="content.hero" :lang="lang" :is-light-mode="isLightMode" />
         <FeatureShowcase :content="content.features" :is-light-mode="isLightMode" />
         <IntegrationComparison :content="content.integrations" :is-light-mode="isLightMode" />
@@ -120,6 +215,23 @@ const content = computed<HomepageContent>(() => {
 
 const isScrolled = ref(false);
 const particlesCanvas = ref<HTMLCanvasElement | null>(null);
+const isMobileMenuOpen = ref(false);
+
+// 移动端菜单控制
+const toggleMobileMenu = () => {
+    isMobileMenuOpen.value = !isMobileMenuOpen.value;
+    // 打开菜单时禁止页面滚动
+    if (isMobileMenuOpen.value) {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = '';
+    }
+};
+
+const closeMobileMenu = () => {
+    isMobileMenuOpen.value = false;
+    document.body.style.overflow = '';
+};
 
 // 初始化主题
 const getInitialTheme = () => {
@@ -376,6 +488,8 @@ onMounted(() => {
         window.removeEventListener("mousemove", handleMouseMove);
         window.removeEventListener("resize", handleResize);
         clearTimeout(mouseTimeout);
+        // 清理移动端菜单状态
+        document.body.style.overflow = '';
     });
 });
 </script>
@@ -799,26 +913,413 @@ onMounted(() => {
     }
 }
 
+// 汉堡菜单按钮
+.hamburger-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 1001;
+
+    .hamburger-line {
+        width: 24px;
+        height: 2px;
+        background: #b0bac9;
+        border-radius: 2px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        margin: 3px 0;
+    }
+
+    &.active {
+        .hamburger-line:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-line:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+    }
+
+    &:hover .hamburger-line {
+        background: #47caff;
+    }
+
+    .homepage-nav.light-mode & {
+        .hamburger-line {
+            background: #1e293b;
+        }
+
+        &:hover .hamburger-line {
+            background: #2563eb;
+        }
+    }
+}
+
+// 移动端菜单
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 50%, #0d1225 100%);
+    z-index: 1002;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+
+    &.open {
+        opacity: 1;
+        visibility: visible;
+
+        .mobile-nav-link {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mobile-menu-logo {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .mobile-menu-actions {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mobile-glow {
+            opacity: 1;
+        }
+    }
+
+    &.light-mode {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e8f4ff 50%, #f0f7ff 100%);
+
+        .mobile-grid-overlay {
+            background-image:
+                linear-gradient(rgba(37, 99, 235, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(37, 99, 235, 0.08) 1px, transparent 1px);
+        }
+
+        .mobile-glow-1 {
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, transparent 70%);
+        }
+
+        .mobile-glow-2 {
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, transparent 70%);
+        }
+
+        .mobile-nav-link {
+            color: #1e293b;
+            border-color: rgba(37, 99, 235, 0.15);
+
+            .link-icon {
+                background: rgba(37, 99, 235, 0.1);
+            }
+
+            &:hover,
+            &:active {
+                background: rgba(37, 99, 235, 0.1);
+                border-color: rgba(37, 99, 235, 0.3);
+                color: #2563eb;
+            }
+        }
+
+        .mobile-menu-divider {
+            background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.3), transparent);
+        }
+
+        .mobile-action-btn {
+            background: rgba(37, 99, 235, 0.1);
+            border-color: rgba(37, 99, 235, 0.2);
+            color: #1e293b;
+
+            &:hover {
+                background: rgba(37, 99, 235, 0.15);
+                border-color: rgba(37, 99, 235, 0.4);
+            }
+        }
+
+        .mobile-close-btn {
+            background: rgba(37, 99, 235, 0.1);
+            border-color: rgba(37, 99, 235, 0.2);
+
+            .close-line {
+                background: #1e293b;
+            }
+
+            &:hover {
+                background: rgba(37, 99, 235, 0.15);
+                border-color: rgba(37, 99, 235, 0.4);
+
+                .close-line {
+                    background: #2563eb;
+                }
+            }
+        }
+    }
+}
+
+// 移动端菜单背景装饰
+.mobile-menu-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.mobile-grid-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(rgba(71, 202, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(71, 202, 255, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.6;
+}
+
+.mobile-glow {
+    position: absolute;
+    filter: blur(80px);
+    opacity: 0;
+    transition: opacity 0.6s ease;
+
+    &.mobile-glow-1 {
+        top: -20%;
+        right: -20%;
+        width: 60%;
+        height: 60%;
+        background: radial-gradient(circle, rgba(189, 52, 254, 0.25) 0%, transparent 70%);
+    }
+
+    &.mobile-glow-2 {
+        bottom: -10%;
+        left: -20%;
+        width: 50%;
+        height: 50%;
+        background: radial-gradient(circle, rgba(71, 202, 255, 0.2) 0%, transparent 70%);
+    }
+}
+
+.mobile-menu-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 80px 24px 40px;
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.mobile-menu-logo {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 16px;
+
+    .mobile-logo-img {
+        width: 64px;
+        height: 64px;
+        filter: drop-shadow(0 0 20px rgba(71, 202, 255, 0.4));
+    }
+}
+
+.mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 280px;
+}
+
+.mobile-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #e0e7ff;
+    text-decoration: none;
+    padding: 16px 20px;
+    border-radius: 16px;
+    border: 1px solid rgba(71, 202, 255, 0.15);
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(8px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    transform: translateY(20px);
+    transition-delay: var(--delay, 0s);
+
+    .link-icon {
+        font-size: 1.2rem;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(71, 202, 255, 0.1);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .link-text {
+        flex: 1;
+    }
+
+    &:hover,
+    &:active {
+        background: rgba(71, 202, 255, 0.1);
+        border-color: rgba(71, 202, 255, 0.3);
+        transform: translateY(0) scale(1.02);
+
+        .link-icon {
+            background: rgba(71, 202, 255, 0.2);
+            transform: scale(1.1);
+        }
+    }
+}
+
+.mobile-menu-divider {
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(71, 202, 255, 0.3), transparent);
+    margin: 12px 0;
+}
+
+.mobile-menu-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+}
+
+.mobile-action-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 24px;
+    background: rgba(71, 202, 255, 0.1);
+    border: 1px solid rgba(71, 202, 255, 0.2);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #e0e7ff;
+
+    .action-icon {
+        width: 28px;
+        height: 28px;
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .action-label {
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    &:hover {
+        background: rgba(71, 202, 255, 0.15);
+        border-color: rgba(71, 202, 255, 0.4);
+        transform: translateY(-2px);
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
+// 移动端关闭按钮
+.mobile-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(71, 202, 255, 0.2);
+    border-radius: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    .close-line {
+        position: absolute;
+        width: 20px;
+        height: 2px;
+        background: #b0bac9;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+
+        &:first-child {
+            transform: rotate(45deg);
+        }
+
+        &:last-child {
+            transform: rotate(-45deg);
+        }
+    }
+
+    &:hover {
+        background: rgba(71, 202, 255, 0.1);
+        border-color: rgba(71, 202, 255, 0.4);
+
+        .close-line {
+            background: #47caff;
+        }
+    }
+
+    &:active {
+        transform: scale(0.9);
+    }
+}
+
 @media (max-width: 768px) {
+    .desktop-nav {
+        display: none;
+    }
+
+    .hamburger-btn {
+        display: flex;
+    }
+
     .nav-content {
-        padding: 16px 0;
+        padding: 12px 0;
+        width: 90%;
     }
 
     .nav-logo .logo-text {
-        font-size: 1.25rem;
+        font-size: 1.1rem;
     }
 
     .nav-logo .logo-icon {
-        width: 32px;
-        height: 32px;
-    }
-
-    .nav-links {
-        gap: 20px;
-    }
-
-    .nav-link {
-        font-size: 0.9rem;
+        width: 28px;
+        height: 28px;
     }
 }
 </style>

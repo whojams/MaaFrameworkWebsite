@@ -765,10 +765,23 @@ const scrollToNext = () => {
 @media (max-width: 768px) {
   .hero-section {
     min-height: auto;
-    padding: 100px 0 60px;
+    padding: 80px 0 60px;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .hero-right {
+    order: -1;
+    margin-bottom: 0;
   }
 
   .hero-left {
+    order: 1;
+
     .hero-title {
       font-size: 2.5rem;
     }
@@ -787,14 +800,7 @@ const scrollToNext = () => {
   }
 
   .lang-particle {
-    width: 32px;
-    height: 32px;
-
-    &.particle-2,
-    &.particle-5 {
-      width: 36px;
-      height: 36px;
-    }
+    display: none;
   }
 
   .ring {
